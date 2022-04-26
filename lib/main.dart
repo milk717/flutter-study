@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());  //앱 시작해주세요~
+  runApp(MyApp());  //앱 시작해주세요~
 }
 //메인페이지 만들기
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  var a = 1;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(),
-          body: ListView.builder(
+        floatingActionButton: FloatingActionButton(
+          child: Text('button'),
+          onPressed: (){
+            print(a.toString());
+            a++;
+          },
+        ),
+        appBar: AppBar(),
+        body: ListView.builder(
               itemCount: 17,
               itemBuilder: (c,i){
                 return ListTile(
