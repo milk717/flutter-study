@@ -11,10 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(),
-          body: Row(
+          body: ListView(
             children: [
-              TextBoxCustom(),
-              a
+              a,a,a,a,a,a,
             ],
           ),
       ),
@@ -23,16 +22,6 @@ class MyApp extends StatelessWidget {
 }
 
 var a = SizedBox(
-  child: Text('안녕'),
+  child: Text('안녕',style: TextStyle(fontSize: 100),),
 );
 
-class TextBoxCustom extends StatelessWidget {
-  const TextBoxCustom({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: Text('안녕'),
-    );
-  }
-}
