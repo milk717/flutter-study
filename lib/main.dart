@@ -16,12 +16,39 @@ class MyApp extends StatelessWidget {
               a,a,a,a,a,a,
             ],
           ),
+        bottomNavigationBar: BottomAppBar(
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Icon(Icons.phone),
+                Icon(Icons.message),
+                Icon(Icons.contact_page),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
 var a = SizedBox(
-  child: Text('안녕',style: TextStyle(fontSize: 100),),
+  child: Row(
+    children: <Widget> [
+      Container(
+        width: 40,
+        height: 40,
+        margin: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: Colors.black
+        ),
+        child: Icon(Icons.person_rounded,color: Colors.white,),
+        ),
+      Text('김수민',style: TextStyle(fontSize: 24),),
+    ],
+  ),
 );
 
