@@ -10,27 +10,32 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold( //레이아웃을 상 중 하로 나누어줌
-        appBar: AppBar(), //상단
-        body: Center(
-          child: Container(
-            color: Colors.blueGrey,
-            height: 300,
-            child: Row(  //body == 중단, Row == 레이아웃을 가로로 배치 (Column == 세로로 배치)
-              mainAxisAlignment: MainAxisAlignment.center,  //가로축 정렬 (CSS flexBox 랑 비슷한가???)
-              crossAxisAlignment: CrossAxisAlignment.center,  //세로축 정렬 
-              /*
-                현재 Row 여서 정축이 가로니까 mainAxisAlignment 가 가로축이 되고,
-                crossAxisAlignment 가 세로축이 된다. Column 으로 설정 시 반대
-              */
-              children: const [
-                Icon(Icons.star),
-                Icon(Icons.star),
-                Icon(Icons.star),
-              ],
-            ),
+        appBar: AppBar(
+          title: Text('앱 이름'),
+        ), //상단
+        body: Text('안녕'),
+        bottomNavigationBar: Container(
+          height: 70,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 5.0,
+              )
+            ]
           ),
-        ),
-          bottomNavigationBar: Text("Bottom"),  //하단
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              Icon(Icons.phone),
+              Icon(Icons.message),
+              Icon(Icons.contact_page),
+            ],
+          ),  //하단
+        )
       )
     );
   }
