@@ -1,4 +1,4 @@
-# 플러터 공부중입니다
+# 플러터 공부중입니다☺️
 
 ## 참고자료
 * [Flutter material library](https://api.flutter.dev/flutter/material/material-library.html)
