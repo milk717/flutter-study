@@ -11,10 +11,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(),
-          body: ListView(
-            children: [
-              a,a,a,a,a,a,
-            ],
+          body: ListView.builder(
+              itemCount: 17,
+              itemBuilder: (c,i){
+                return ListTile(
+                  leading: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.black
+                    ),
+                    child: Icon(Icons.person_rounded,color: Colors.white,),
+                  ),
+                  title: Text('김수민',style: TextStyle(fontSize: 24),),
+                );
+              }
           ),
         bottomNavigationBar: BottomAppBar(
           child: SizedBox(
@@ -34,21 +46,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
-var a = SizedBox(
-  child: Row(
-    children: <Widget> [
-      Container(
-        width: 40,
-        height: 40,
-        margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Colors.black
-        ),
-        child: Icon(Icons.person_rounded,color: Colors.white,),
-        ),
-      Text('김수민',style: TextStyle(fontSize: 24),),
-    ],
-  ),
-);
 
