@@ -1,16 +1,7 @@
-# contact
+# 플러터 공부중입니다
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 참고자료
+* [Flutter material library](https://api.flutter.dev/flutter/material/material-library.html)
+* [플러터 공식 문서](https://flutter.dev/docs)
+* [플러터 예제 앱](https://github.com/flutter/samples)
+* [코딩애플 유튜브_쉽게 알려주는 플러터 강의임](https://www.youtube.com/playlist?list=PLfLgtT94nNq1izG4R2WDN517iPX4WXH3C) 
