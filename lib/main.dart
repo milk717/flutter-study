@@ -13,26 +13,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var a = 1;
+  var like = [0,0,0];
+  var name = ['나루토','코난','원피스'];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(),
         body: ListView.builder(
-              itemCount: 17,
+              itemCount: 3,
               itemBuilder: (c,i){
                 return ListTile(
-                  leading: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.black
-                    ),
-                    child: Icon(Icons.person_rounded,color: Colors.white,),
+                  leading: Text(like[i].toString()),
+                  title: Text(name[i]),
+                  trailing: ElevatedButton(
+                    child: Text('좋아요'),
+                    onPressed: (){
+                      setState(() {
+                        like[i]++;
+                      });
+                    },
                   ),
-                  title: Text('김수민',style: TextStyle(fontSize: 24),),
                 );
               }
           ),
