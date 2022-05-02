@@ -3,23 +3,21 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MyApp());  //앱 시작해주세요~
 }
+
 //메인페이지 만들기
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
 
-  var a = 1;
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  var a = 1;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Text('button'),
-          onPressed: (){
-            print(a.toString());
-            a++;
-          },
-        ),
         appBar: AppBar(),
         body: ListView.builder(
               itemCount: 17,
@@ -43,10 +41,10 @@ class MyApp extends StatelessWidget {
             height: 60,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                Icon(Icons.phone),
-                Icon(Icons.message),
-                Icon(Icons.contact_page),
+              children: <Widget> [
+                IconButton(icon: Icon(Icons.phone),onPressed: (){},),
+                IconButton(icon: Icon(Icons.message),onPressed: (){},),
+                IconButton(icon: Icon(Icons.contact_page),onPressed: (){},),
               ],
             ),
           ),
