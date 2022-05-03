@@ -16,21 +16,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var like = [0,0,0];
-  var name = ['나루토','코난','원피스'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Text('버튼'),
-          onPressed: (){
-            showDialog(
-              context: context,
-              builder: (context){
-                return Dialog(
-                  child: Text('안녕'),);
+        floatingActionButton: Builder(
+          builder: (context) {
+            return FloatingActionButton(
+              onPressed: (){
+                showDialog(context: context, builder: (context){
+                  return DialogUI();
                 });
-          },
+              },
+            );
+          }
         ),
         appBar: AppBar(),
         body: Text('body'),
@@ -50,5 +48,35 @@ class _MyAppState extends State<MyApp> {
       );
   }
 }
+
+class DialogUI extends StatelessWidget {
+  const DialogUI({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(child:
+    Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [Text(''),TextField(),Text(''),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButton(
+              child: Text('확인'),
+              onPressed: (){},
+            ),
+            TextButton(
+              child: Text('취소'),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        )],
+    ),
+    );
+  }
+}
+
 
 
