@@ -16,6 +16,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var a = 1;
+  plus(){
+    setState(() {
+      a++;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,14 +30,14 @@ class _MyAppState extends State<MyApp> {
             return FloatingActionButton(
               onPressed: (){
                 showDialog(context: context, builder: (context){
-                  return DialogUI();
+                  return DialogUI(plus : plus);
                 });
               },
             );
           }
         ),
         appBar: AppBar(),
-        body: Text('body'),
+        body: Text(a.toString()),
         bottomNavigationBar: BottomAppBar(
           child: SizedBox(
             height: 60,
@@ -50,20 +56,24 @@ class _MyAppState extends State<MyApp> {
 }
 
 class DialogUI extends StatelessWidget {
-  const DialogUI({Key? key}) : super(key: key);
+  const DialogUI({Key? key, this.plus}) : super(key: key);
+  final plus;
 
   @override
   Widget build(BuildContext context) {
     return Dialog(child:
     Column(
       mainAxisSize: MainAxisSize.min,
-      children: [Text(''),TextField(),Text(''),
+      children: [TextField(),Text(''),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
               child: Text('확인'),
-              onPressed: (){},
+              onPressed: (){
+                plus();
+                Navigator.pop(context);
+              },
             ),
             TextButton(
               child: Text('취소'),
