@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());  //앱 시작해주세요~
+  runApp(MaterialApp(
+      home: MyApp()
+    )
+  );  //앱 시작해주세요~
 }
 
 //메인페이지 만들기
@@ -17,26 +20,20 @@ class _MyAppState extends State<MyApp> {
   var name = ['나루토','코난','원피스'];
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Text('버튼'),
+          onPressed: (){
+            showDialog(
+              context: context,
+              builder: (context){
+                return Dialog(
+                  child: Text('안녕'),);
+                });
+          },
+        ),
         appBar: AppBar(),
-        body: ListView.builder(
-              itemCount: 3,
-              itemBuilder: (c,i){
-                return ListTile(
-                  leading: Text(like[i].toString()),
-                  title: Text(name[i]),
-                  trailing: ElevatedButton(
-                    child: Text('좋아요'),
-                    onPressed: (){
-                      setState(() {
-                        like[i]++;
-                      });
-                    },
-                  ),
-                );
-              }
-          ),
+        body: Text('body'),
         bottomNavigationBar: BottomAppBar(
           child: SizedBox(
             height: 60,
@@ -50,8 +47,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
