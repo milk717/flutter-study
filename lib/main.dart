@@ -1,3 +1,5 @@
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +15,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  getPermission() async {
+    var status = await Permission.contacts.status;
+    if(status.isGranted){
+      print('허락됨');
+    }else if(status.isDenied){
+      print('거절됨');
+    }
+  }
+
   List nameList = ['코난','나루토','사스케','원피스'];
 
   addName(String name){
@@ -32,7 +44,14 @@ class _MyAppState extends State<MyApp> {
           },
         );
       }),
-      appBar: AppBar(),
+      appBar: AppBar(
+        title:Text('오늘은 어린이날~ 나는 어른이'),
+        actions: [
+          IconButton(onPressed: (){
+            getPermission();
+          }, icon: Icon(Icons.account_box))
+        ],
+      ),
       body: ListView.builder(
           itemCount: nameList.length,
           itemBuilder: (context, index) {
