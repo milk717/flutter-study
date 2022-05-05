@@ -18,10 +18,12 @@ class _MyAppState extends State<MyApp> {
 
   getPermission() async {
     var status = await Permission.contacts.status;
+    print(status);
     if(status.isGranted){
       print('허락됨');
     }else if(status.isDenied){
       print('거절됨');
+      Permission.contacts.request();
     }
   }
 
