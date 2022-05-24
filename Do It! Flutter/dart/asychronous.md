@@ -8,7 +8,7 @@
 
 ## 예제 코드
 
-'''dart
+```dart
 void main() {
 checkVersion();
 print('end process');
@@ -22,7 +22,7 @@ print(version);
 int lookUpVersion(){
 return 12;
 }
-'''
+```
 
 위와 같은 코드를 실행하면  
 end process  
