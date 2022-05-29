@@ -17,7 +17,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String result = '';
+  List data = [];
   int index = 0;
+
+  @override
+  void initState(){
+    getData();
+  }
+
+  getData() async {
+    var response = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
+    data = jsonDecode(response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +42,7 @@ class _MyAppState extends State<MyApp> {
           )
         ],
       ),
-      body: (index==0)?HomeWidget():ShoppingWidget(result: result,),
+      body: (index==0)?HomeWidget(data: data,):ShoppingWidget(result: data[0].toString(),),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -55,22 +66,17 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()async{
-          var response = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
-          print(jsonDecode(response.body));
-          setState((){
-            result = jsonDecode(response.body).toString();
-          });
-        },
-        child: const Icon(Icons.file_download),
-      ),
     );
   }
 }
 
 class HomeWidget extends StatelessWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  HomeWidget({
+    Key? key,
+    required this.data
+  }) : super(key: key);
+
+  List data;
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +86,10 @@ class HomeWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset('assets/conan.jpg'),
-              Text('좋아요 100'),
-              Text('글쓴이'),
-              Text('글내용'),
+              Image.network(data[index]['image']),
+              Text('좋아요 ${data[index]['likes']}'),
+              Text(data[index]['user']),
+              Text(data[index]['content']),
             ],
           );
         }
