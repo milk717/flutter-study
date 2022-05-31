@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -22,12 +23,19 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState(){
+    super.initState();
     getData();
+    // getDataUsingDio();
   }
 
   getData() async {
     var response = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
     data = jsonDecode(response.body);
+  }
+
+  getDataUsingDio() async{
+    var dio=Dio();
+    dio.options.baseUrl = 'https://codingapple1.github.io/app/data.json';
   }
 
   @override
