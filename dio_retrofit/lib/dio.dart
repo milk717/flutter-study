@@ -16,15 +16,17 @@ var options = BaseOptions(
 Dio dio = Dio(options);
 late Response response;
 
-Future<List> getSearchDataList({required String title}) async{
-  List book = [];
+@JsonSerializable()
+Future<List<Items>?> getSearchDataList({required String title}) async{
+  BookSearchList bookSearchList;
+  List<Items>? booList = [];
   try{
     response = await dio.get('',queryParameters: {'query': title});
-    var data = response.data;
-    book = data['items'];
-    // print(data.toString());
+    bookSearchList = BookSearchList.fromJson(response.data);
+    booList = bookSearchList.items;
+    print(booList.toString());
   }catch(e){
     print('error $e');
   }
-  return book;
+  return booList;
 }

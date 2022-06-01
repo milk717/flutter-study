@@ -1,4 +1,4 @@
-import 'package:dio_retrofit/book_model.dart';
+ import 'package:dio_retrofit/book_model.dart';
 import 'package:dio_retrofit/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +11,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   late TextEditingController _controller;
-  late Future<List> searchResult;
-  var title;
+  late Future<List<Items>?> searchResult;
 
   @override
   void initState() {
@@ -35,7 +34,7 @@ class _SearchPageState extends State<SearchPage> {
               searchResult = getSearchDataList(title: _controller.text);
             },
           ),
-          FutureBuilder<List>(
+          FutureBuilder<List<Items>?>(
             future: searchResult,
             builder: (context, snapshot) {
               if (snapshot.hasData == false) {
@@ -46,7 +45,7 @@ class _SearchPageState extends State<SearchPage> {
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index){
                       return ListTile(
-                        title: Text(snapshot.data![index]['title']),
+                        title: Text(snapshot.data?[index].title ?? ''),
                       );
                     }
                   ),

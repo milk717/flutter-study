@@ -1,4 +1,38 @@
+class BookSearchList {
+  String? lastBuildDate;
+  int? total;
+  int? start;
+  int? display;
+  List<Items>? items;
 
+  BookSearchList(
+      {this.lastBuildDate, this.total, this.start, this.display, this.items});
+
+  BookSearchList.fromJson(Map<String, dynamic> json) {
+    lastBuildDate = json['lastBuildDate'];
+    total = json['total'];
+    start = json['start'];
+    display = json['display'];
+    if (json['items'] != null) {
+      items = <Items>[];
+      json['items'].forEach((v) {
+        items!.add(new Items.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['lastBuildDate'] = this.lastBuildDate;
+    data['total'] = this.total;
+    data['start'] = this.start;
+    data['display'] = this.display;
+    if (this.items != null) {
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
 
 class Items {
   String? title;
