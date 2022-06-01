@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_retrofit/book_model.dart';
 import 'package:dio_retrofit/naver_api_key.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
@@ -15,7 +16,15 @@ var options = BaseOptions(
 Dio dio = Dio(options);
 late Response response;
 
-getSearchDataList() async{
-  response = await dio.get('',queryParameters: {'query': '셜록홈즈'});
-  print(response);
+Future<List> getSearchDataList({required String title}) async{
+  List book = [];
+  try{
+    response = await dio.get('',queryParameters: {'query': title});
+    var data = response.data;
+    book = data['items'];
+    // print(data.toString());
+  }catch(e){
+    print('error $e');
+  }
+  return book;
 }

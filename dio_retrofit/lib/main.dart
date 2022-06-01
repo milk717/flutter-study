@@ -1,20 +1,9 @@
 import 'package:dio_retrofit/dio.dart';
+import 'package:dio_retrofit/search_page.dart';
 import 'package:flutter/material.dart';
 
 void main()=>runApp(MaterialApp(
-  home: MyApp(),
+  home: SearchPage(),
 ));
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    getSearchDataList();
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dio & retrofit sample'),
-      ),
-    );
-  }
-}
