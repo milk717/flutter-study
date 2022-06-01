@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dio_retrofit/naver_api_keys.dart';
+import 'package:dio_retrofit/naver_api_key.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
