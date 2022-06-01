@@ -1,26 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:dio_retrofit/naver_api_keys.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
 var options = BaseOptions(
-  baseUrl: 'https://reqres.in/',
+  baseUrl: 'https://openapi.naver.com/v1/search/book.json',
   connectTimeout: 5000,
   receiveTimeout: 3000,
+  headers: {
+    'X-Naver-Client-Id' : NaverClientId,
+    'X-Naver-Client-Secret' : NaverClientSecret,
+  }
 );
 Dio dio = Dio(options);
 late Response response;
 
-getUserList() async{
-  response = await dio.get('api/users?page=2');
-  print(response.data.toString());
-  response = await dio.get('api/users', queryParameters: {'page': 1});
-  print(response.data.toString());
-}
-getUser() async{
- response = await dio.get('api/users/2');
- print(response.data.toString());
-}
-postUser() async{
-  response = await dio.post('api/users',data:{'name':'summin', 'job':'student'});
-  print(response.data.toString());
+getSearchDataList() async{
+  response = await dio.get('',queryParameters: {'query': '셜록홈즈'});
+  print(response);
 }

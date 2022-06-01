@@ -10,9 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //getUserList();
-    getUser();
-    postUser();
+    getSearchDataList();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dio & retrofit sample'),
