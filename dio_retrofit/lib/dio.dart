@@ -8,37 +8,19 @@ var options = BaseOptions(
   receiveTimeout: 3000,
 );
 Dio dio = Dio(options);
+late Response response;
 
-@JsonSerializable()
-class User{
-  User({
-    required this.data,
-  });
-
-  Data data;
-
-  factory User.fromJson(Map<String, dynamic> json)=>_$UserFromJson(json);
-  Map<String, dynamic> toJson()=>_$UserToJson(this);
+getUserList() async{
+  response = await dio.get('api/users?page=2');
+  print(response.data.toString());
+  response = await dio.get('api/users', queryParameters: {'page': 1});
+  print(response.data.toString());
 }
-
-@JsonSerializable()
-class Data{
-  Data({
-    required this.id,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.avatar,
-  });
-
-  int id;
-  String email;
-  @JsonKey(name: 'first_name')
-  String firstName;
-  @JsonKey(name: 'last_name')
-  String lastName;
-  String avatar;
-
-  factory Data.fromJson(Map<String, dynamic> json)=>_$DataFromJson(json);
-  Map<String, dynamic> toJson()=>_$DataToJson(this);
+getUser() async{
+ response = await dio.get('api/users/2');
+ print(response.data.toString());
+}
+postUser() async{
+  response = await dio.post('api/users',data:{'name':'summin', 'job':'student'});
+  print(response.data.toString());
 }

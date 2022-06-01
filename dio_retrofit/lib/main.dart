@@ -1,3 +1,4 @@
+import 'package:dio_retrofit/dio.dart';
 import 'package:flutter/material.dart';
 
 void main()=>runApp(MaterialApp(
@@ -9,6 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //getUserList();
+    getUser();
+    postUser();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dio & retrofit sample'),
