@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -20,22 +19,22 @@ class _MyAppState extends State<MyApp> {
   String result = '';
   List data = [];
   int index = 0;
+  var scroll = ScrollController();
 
   @override
   void initState(){
     super.initState();
     getData();
-    // getDataUsingDio();
+    scroll.addListener(() {
+      if(scroll.position.pixels == scroll.position.maxScrollExtent){
+        print('맨 밑까지 스크롤함');
+      }
+    });
   }
 
   getData() async {
     var response = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
     data = jsonDecode(response.body);
-  }
-
-  getDataUsingDio() async{
-    var dio=Dio();
-    dio.options.baseUrl = 'https://codingapple1.github.io/app/data.json';
   }
 
   @override
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           )
         ],
       ),
-      body: (index==0)?HomeWidget(data: data,):ShoppingWidget(result: data[0].toString(),),
+      body: (index==0)?HomeWidget(data: data,scroll: scroll,):ShoppingWidget(result: data[0].toString(),),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -81,15 +80,18 @@ class _MyAppState extends State<MyApp> {
 class HomeWidget extends StatelessWidget {
   HomeWidget({
     Key? key,
-    required this.data
+    required this.data,
+    required this.scroll
   }) : super(key: key);
 
   List data;
+  var scroll;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         itemCount: 3,
+        controller: scroll,
         itemBuilder: (context,index){
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
