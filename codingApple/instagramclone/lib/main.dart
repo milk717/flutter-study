@@ -82,10 +82,13 @@ class _MyAppState extends State<MyApp> {
               var image = await picker.pickImage(source: ImageSource.gallery);
               userImage = File(image?.path ?? '');
 
-              Navigator.push(
+              var content = await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (c) => Upload(userImage: userImage,)),
               );
+              setState((){
+                data.insert(0,{'id': data.length, 'image': userImage, 'likes': 0, 'date': 'July 17', 'content': content, 'liked' : false, 'user': 'Sumin'});
+              });
             },
             icon: Icon(Icons.add_box_outlined),
           ),
@@ -143,7 +146,9 @@ class HomeWidget extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(data[index]['image']),
+                data[index]['image'].runtimeType == String
+                ?Image.network(data[index]['image'])
+                :Image.file(data[index]['image']),
                 Text('좋아요 ${data[index]['likes']}'),
                 Text(data[index]['user']),
                 Text(data[index]['content']),
@@ -166,29 +171,49 @@ class ShoppingWidget extends StatelessWidget {
 }
 
 class Upload extends StatelessWidget {
-  const Upload({
+  Upload({
     Key? key,
     required this.userImage
   }) : super(key: key);
 
   final userImage;
+  var textController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('상세보기 페이지')),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.file(userImage),
-          Text('이미지 업로드 화면'),
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.close),
-          ),
-        ],
+      appBar: AppBar(title: Text('글 등록')),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.file(userImage),
+            TextField(
+              controller: textController,
+              decoration: InputDecoration(
+                labelText: 'content',
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.close),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context, textController.text);
+                  },
+                  icon: Icon(Icons.send),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
