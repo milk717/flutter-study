@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:instagramclone/style.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
-void main() => runApp(MaterialApp(
-  home: MyApp(),
-  theme: customStyle(),
-));
+void main() => runApp(
+      MaterialApp(
+        home: MyApp(),
+        theme: customStyle(),
+        // initialRoute: '/',
+        // routes: {
+        //   '/':(c)=>Text('첫 페이지'),
+        //   '/detail':(c)=>Text('두 번째 페이지'),
+        // },
+      ),
+    );
 
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
@@ -23,24 +32,28 @@ class _MyAppState extends State<MyApp> {
   int get = 0;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     getData();
     scroll.addListener(() async {
-      if(scroll.position.pixels == scroll.position.maxScrollExtent){
+      if (scroll.position.pixels == scroll.position.maxScrollExtent) {
         get++;
         var response;
-        switch(get){
-          case 1:{
-            response = await http.get(Uri.parse('https://codingapple1.github.io/app/more1.json'));
-            break;
-          }
-          case 2:{
-            response = await http.get(Uri.parse('https://codingapple1.github.io/app/more2.json'));
-            break;
-          }
+        switch (get) {
+          case 1:
+            {
+              response = await http.get(
+                  Uri.parse('https://codingapple1.github.io/app/more1.json'));
+              break;
+            }
+          case 2:
+            {
+              response = await http.get(
+                  Uri.parse('https://codingapple1.github.io/app/more2.json'));
+              break;
+            }
         }
-        setState((){
+        setState(() {
           data.add(jsonDecode(response.body));
         });
         print(data);
@@ -48,10 +61,11 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  getData() async{
-    var response = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
-    setState((){
-      data =  jsonDecode(response.body);
+  getData() async {
+    var response = await http
+        .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
+    setState(() {
+      data = jsonDecode(response.body);
     });
   }
 
@@ -62,37 +76,43 @@ class _MyAppState extends State<MyApp> {
         title: Text('Instagram'),
         actions: [
           IconButton(
-            onPressed: (){
-              Navigator.push(context,
-                MaterialPageRoute(builder: (c)=> Upload()),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (c) => Upload()),
               );
             },
             icon: Icon(Icons.add_box_outlined),
-          )
+          ),
         ],
       ),
-      body: (index==0)?HomeWidget(data: data,scroll: scroll,):ShoppingWidget(result: data.toString(),),
+      body: (index == 0)
+          ? HomeWidget(
+              data: data,
+              scroll: scroll,
+            )
+          : ShoppingWidget(
+              result: data.toString(),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: index,
-        onTap: (i){
+        onTap: (i) {
           print(i);
-          setState((){
+          setState(() {
             index = i;
           });
         },
-        items: const <BottomNavigationBarItem> [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: '홈'
-          ),
+              icon: Icon(Icons.home_outlined),
+              activeIcon: Icon(Icons.home),
+              label: '홈'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
-            activeIcon: Icon(Icons.shopping_bag),
-            label: '쇼핑'
-          ),
+              icon: Icon(Icons.shopping_bag_outlined),
+              activeIcon: Icon(Icons.shopping_bag),
+              label: '쇼핑'),
         ],
       ),
     );
@@ -100,24 +120,21 @@ class _MyAppState extends State<MyApp> {
 }
 
 class HomeWidget extends StatelessWidget {
-  HomeWidget({
-    Key? key,
-    required this.data,
-    required this.scroll
-  }) : super(key: key);
+  HomeWidget({Key? key, required this.data, required this.scroll})
+      : super(key: key);
 
   List data;
   var scroll;
 
   @override
   Widget build(BuildContext context) {
-    if(data.isEmpty){
+    if (data.isEmpty) {
       return const Text('로딩중');
-    }else{
+    } else {
       return ListView.builder(
           itemCount: data.length,
           controller: scroll,
-          itemBuilder: (context,index){
+          itemBuilder: (context, index) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -127,20 +144,16 @@ class HomeWidget extends StatelessWidget {
                 Text(data[index]['content']),
               ],
             );
-          }
-      );
+          });
     }
-
   }
 }
 
 class ShoppingWidget extends StatelessWidget {
-  ShoppingWidget({
-    Key? key,
-    this.result
-  }) : super(key: key);
+  ShoppingWidget({Key? key, this.result}) : super(key: key);
 
   String? result;
+
   @override
   Widget build(BuildContext context) {
     return Center(child: Text('$result'));
@@ -159,14 +172,13 @@ class Upload extends StatelessWidget {
         children: [
           Text('이미지 업로드 화면'),
           IconButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
             },
-            icon:Icon(Icons.close),
+            icon: Icon(Icons.close),
           ),
         ],
       ),
     );
   }
 }
-
