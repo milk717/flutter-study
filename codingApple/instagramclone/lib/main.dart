@@ -64,7 +64,8 @@ class _MyAppState extends State<MyApp> {
 
   getData() async {
     var response = await http
-        .get(Uri.parse('https://codingapple1.github.io/app/data.json'));
+        .get(Uri.parse('https://milk717.github.io/app/data.json'));
+    print(response);
     setState(() {
       data = jsonDecode(response.body);
     });
