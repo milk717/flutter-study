@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:instagramclone/style.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(
       MaterialApp(
@@ -31,6 +32,13 @@ class _MyAppState extends State<MyApp> {
   var scroll = ScrollController();
   int get = 0;
   var userImage;
+
+  saveData() async{
+    var storage = await SharedPreferences.getInstance();
+    storage.setString('name', 'milk717');
+    var result = storage.getString('name');
+    print(result);
+  }
 
   @override
   void initState() {
