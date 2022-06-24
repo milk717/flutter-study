@@ -62,7 +62,11 @@ class _MyAppState extends State<MyApp> {
         title: Text('Instagram'),
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context,
+                MaterialPageRoute(builder: (c)=> Upload()),
+              );
+            },
             icon: Icon(Icons.add_box_outlined),
           )
         ],
@@ -78,7 +82,7 @@ class _MyAppState extends State<MyApp> {
             index = i;
           });
         },
-        items: <BottomNavigationBarItem> [
+        items: const <BottomNavigationBarItem> [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
@@ -108,7 +112,7 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(data.isEmpty){
-      return Text('로딩중');
+      return const Text('로딩중');
     }else{
       return ListView.builder(
           itemCount: data.length,
@@ -142,3 +146,27 @@ class ShoppingWidget extends StatelessWidget {
     return Center(child: Text('$result'));
   }
 }
+
+class Upload extends StatelessWidget {
+  const Upload({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('상세보기 페이지')),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text('이미지 업로드 화면'),
+          IconButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            icon:Icon(Icons.close),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
