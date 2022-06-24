@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:instagramclone/style.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 void main() => runApp(
       MaterialApp(
@@ -32,13 +32,6 @@ class _MyAppState extends State<MyApp> {
   var scroll = ScrollController();
   int get = 0;
   var userImage;
-
-  saveData() async{
-    var storage = await SharedPreferences.getInstance();
-    storage.setString('name', 'milk717');
-    var result = storage.getString('name');
-    print(result);
-  }
 
   @override
   void initState() {
@@ -71,8 +64,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   getData() async {
-    var response = await http
-        .get(Uri.parse('https://milk717.github.io/app/data.json'));
+    var response =
+        await http.get(Uri.parse('https://milk717.github.io/app/data.json'));
     print(response);
     setState(() {
       data = jsonDecode(response.body);
@@ -93,10 +86,21 @@ class _MyAppState extends State<MyApp> {
 
               var content = await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (c) => Upload(userImage: userImage,)),
+                MaterialPageRoute(
+                    builder: (c) => Upload(
+                          userImage: userImage,
+                        )),
               );
-              setState((){
-                data.insert(0,{'id': data.length, 'image': userImage, 'likes': 0, 'date': 'July 17', 'content': content, 'liked' : false, 'user': 'Sumin'});
+              setState(() {
+                data.insert(0, {
+                  'id': data.length,
+                  'image': userImage,
+                  'likes': 0,
+                  'date': 'July 17',
+                  'content': content,
+                  'liked': false,
+                  'user': 'Sumin'
+                });
               });
             },
             icon: Icon(Icons.add_box_outlined),
@@ -156,10 +160,28 @@ class HomeWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 data[index]['image'].runtimeType == String
-                ?Image.network(data[index]['image'])
-                :Image.file(data[index]['image']),
+                    ? Image.network(data[index]['image'])
+                    : Image.file(data[index]['image']),
                 Text('좋아요 ${data[index]['likes']}'),
-                Text(data[index]['user']),
+                GestureDetector(
+                  child: Text(data[index]['user']),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        //a1 = 0~1로 페이지 전환됨에 따라 증가(새로운 페이지)
+                        //a2 = 0~1로 페이지 전환됨에 따라 증가(기존 페이지)
+                        pageBuilder: (c, a1, a2) => Profile(),
+                        transitionsBuilder: (c, a1, a2, child) =>
+                            FadeTransition(
+                          opacity: a1,
+                          child: child,
+                        ),
+                        transitionDuration: Duration(milliseconds: 200),
+                      ),
+                    );
+                  },
+                ),
                 Text(data[index]['content']),
               ],
             );
@@ -180,14 +202,10 @@ class ShoppingWidget extends StatelessWidget {
 }
 
 class Upload extends StatelessWidget {
-  Upload({
-    Key? key,
-    required this.userImage
-  }) : super(key: key);
+  Upload({Key? key, required this.userImage}) : super(key: key);
 
   final userImage;
   var textController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -224,6 +242,18 @@ class Upload extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Profile extends StatelessWidget {
+  const Profile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Text('프로필 페이지'),
     );
   }
 }
