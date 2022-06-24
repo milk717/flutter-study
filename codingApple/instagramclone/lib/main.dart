@@ -20,21 +20,39 @@ class _MyAppState extends State<MyApp> {
   List data = [];
   int index = 0;
   var scroll = ScrollController();
+  int get = 0;
 
   @override
   void initState(){
     super.initState();
     getData();
-    scroll.addListener(() {
+    scroll.addListener(() async {
       if(scroll.position.pixels == scroll.position.maxScrollExtent){
-        print('맨 밑까지 스크롤함');
+        get++;
+        var response;
+        switch(get){
+          case 1:{
+            response = await http.get(Uri.parse('https://codingapple1.github.io/app/more1.json'));
+            break;
+          }
+          case 2:{
+            response = await http.get(Uri.parse('https://codingapple1.github.io/app/more2.json'));
+            break;
+          }
+        }
+        setState((){
+          data.add(jsonDecode(response.body));
+        });
+        print(data);
       }
     });
   }
 
-  getData() async {
+  getData() async{
     var response = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
-    data = jsonDecode(response.body);
+    setState((){
+      data =  jsonDecode(response.body);
+    });
   }
 
   @override
@@ -49,7 +67,7 @@ class _MyAppState extends State<MyApp> {
           )
         ],
       ),
-      body: (index==0)?HomeWidget(data: data,scroll: scroll,):ShoppingWidget(result: data[0].toString(),),
+      body: (index==0)?HomeWidget(data: data,scroll: scroll,):ShoppingWidget(result: data.toString(),),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -89,21 +107,26 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: 3,
-        controller: scroll,
-        itemBuilder: (context,index){
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(data[index]['image']),
-              Text('좋아요 ${data[index]['likes']}'),
-              Text(data[index]['user']),
-              Text(data[index]['content']),
-            ],
-          );
-        }
-    );
+    if(data.isEmpty){
+      return Text('로딩중');
+    }else{
+      return ListView.builder(
+          itemCount: data.length,
+          controller: scroll,
+          itemBuilder: (context,index){
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(data[index]['image']),
+                Text('좋아요 ${data[index]['likes']}'),
+                Text(data[index]['user']),
+                Text(data[index]['content']),
+              ],
+            );
+          }
+      );
+    }
+
   }
 }
 
