@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   int index = 0;
   var scroll = ScrollController();
   int get = 0;
+  var userImage;
 
   @override
   void initState() {
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         setState(() {
           data.add(jsonDecode(response.body));
         });
-        print(data);
+        print('스크롤끝');
       }
     });
   }
@@ -76,10 +77,14 @@ class _MyAppState extends State<MyApp> {
         title: Text('Instagram'),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              var picker = ImagePicker();
+              var image = await picker.pickImage(source: ImageSource.gallery);
+              userImage = File(image?.path ?? '');
+
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (c) => Upload()),
+                MaterialPageRoute(builder: (c) => Upload(userImage: userImage,)),
               );
             },
             icon: Icon(Icons.add_box_outlined),
@@ -161,7 +166,12 @@ class ShoppingWidget extends StatelessWidget {
 }
 
 class Upload extends StatelessWidget {
-  const Upload({Key? key}) : super(key: key);
+  const Upload({
+    Key? key,
+    required this.userImage
+  }) : super(key: key);
+
+  final userImage;
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +180,7 @@ class Upload extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Image.file(userImage),
           Text('이미지 업로드 화면'),
           IconButton(
             onPressed: () {
