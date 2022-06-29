@@ -10,8 +10,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  late TextEditingController _controller;
-  late Future<List<Items>?> searchResult;
+  late TextEditingController _controller;  late Future<List<Items>?> searchResult;
 
   @override
   void initState() {
