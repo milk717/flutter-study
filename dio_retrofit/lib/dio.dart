@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_retrofit/book_model.dart';
 import 'package:dio_retrofit/naver_api_key.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
 
 var options = BaseOptions(
   baseUrl: 'https://openapi.naver.com/v1/search/book.json',
