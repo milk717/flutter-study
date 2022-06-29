@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dio_retrofit/book_model.dart';
+import 'package:dio_retrofit/data/model/book_model.dart';
 import 'package:dio_retrofit/naver_api_key.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -17,11 +17,11 @@ late Response response;
 
 @JsonSerializable()
 Future<List<Items>?> getSearchDataList({required String title}) async{
-  BookSearchList bookSearchList;
+  BookSearchResult bookSearchList;
   List<Items>? booList = [];
   try{
     response = await dio.get('',queryParameters: {'query': title});
-    bookSearchList = BookSearchList.fromJson(response.data);
+    bookSearchList = BookSearchResult.fromJson(response.data);
     booList = bookSearchList.items;
     print(booList.toString());
   }catch(e){

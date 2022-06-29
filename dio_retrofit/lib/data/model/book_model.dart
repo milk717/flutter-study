@@ -1,14 +1,14 @@
-class BookSearchList {
+class BookSearchResult {
   String? lastBuildDate;
   int? total;
   int? start;
   int? display;
   List<Items>? items;
 
-  BookSearchList(
+  BookSearchResult(
       {this.lastBuildDate, this.total, this.start, this.display, this.items});
 
-  BookSearchList.fromJson(Map<String, dynamic> json) {
+  BookSearchResult.fromJson(Map<String, dynamic> json) {
     lastBuildDate = json['lastBuildDate'];
     total = json['total'];
     start = json['start'];

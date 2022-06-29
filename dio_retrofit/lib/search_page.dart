@@ -1,4 +1,4 @@
- import 'package:dio_retrofit/book_model.dart';
+ import 'package:dio_retrofit/data/model/book_model.dart';
 import 'package:dio_retrofit/dio.dart';
 import 'package:flutter/material.dart';
 
