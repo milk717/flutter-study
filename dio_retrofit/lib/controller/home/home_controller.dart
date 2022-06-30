@@ -20,7 +20,7 @@ class HomeController extends GetxController{
   }
 
   sendButtonClickEvent(){
-    inputText.value =textEditingController.value.text;
+    getSearchResult(title: textEditingController.value.text);
     textEditingController.clear();
   }
 }
