@@ -26,7 +26,7 @@ class BookApiClient{
     }catch(e){
       print('error $e');
     }
-    bookList!.forEach((element) {print(title);});
+    bookList!.forEach((element) {print(element.title);});
     return bookList;
   }
 }
