@@ -8,7 +8,7 @@ class HomeController extends GetxController{
   final BookRepository bookRepository;
   HomeController({required this.bookRepository});
 
-  final Future<RxList> bookList = [].obs as Future<RxList>;
+  late final RxList<Items> _bookList;
   get bookList => _bookList.value;
   set bookList(items) => _bookList.value = items;
 
@@ -22,5 +22,10 @@ class HomeController extends GetxController{
   sendButtonClickEvent(){
     getSearchResult(title: textEditingController.value.text);
     textEditingController.clear();
+  }
+
+  Future<List<Items>> getFuture() async{
+    //await Future.delayed(Duration(seconds: 1));
+    return _bookList.value;
   }
 }

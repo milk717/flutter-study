@@ -17,9 +17,9 @@ class HomePage extends GetView<HomeController> {
         children: [
           SearchBox(),
           FutureBuilder<List<Items>>(
-            future: controller.bookList,
+            future: controller.getFuture(),
             builder: (context, snapshot){
-              if(!snapshot.hasData){
+              if(snapshot.hasData == false){
                 return const CircularProgressIndicator();
               }else if(snapshot.hasData){
                 return Expanded(
@@ -27,7 +27,8 @@ class HomePage extends GetView<HomeController> {
                         () => ListView.builder(
                         itemCount: controller.bookList.length,
                         itemBuilder: (context, index) {
-                          Items? data = controller.bookList[index];
+                          // Items? data = controller.bookList[index];
+                          Items? data = snapshot.data?[index];
                           return Card(
                             elevation: 2,
                             child: ListTile(
