@@ -16,23 +16,34 @@ class HomePage extends GetView<HomeController> {
       body: Column(
         children: [
           SearchBox(),
-          Expanded(
-            child: Obx(
-                () => ListView.builder(
-                  itemCount: controller.bookList.length,
-                  itemBuilder: (context, index) {
-                    Items? data = controller.bookList[index];
-                    return Card(
-                      elevation: 2,
-                      child: ListTile(
-                        title: Text(data?.title ?? 'a'),
-                        subtitle: Text(data?.publisher ?? ''),
-                        trailing: Image.network(data?.image ??
-                            'https://milk717.github.io/app/kid1412.jpg'),
-                      ),
-                    );
-                  }),
-            ),
+          FutureBuilder<List<Items>>(
+            future: controller.bookList,
+            builder: (context, snapshot){
+              if(!snapshot.hasData){
+                return const CircularProgressIndicator();
+              }else if(snapshot.hasData){
+                return Expanded(
+                  child: Obx(
+                        () => ListView.builder(
+                        itemCount: controller.bookList.length,
+                        itemBuilder: (context, index) {
+                          Items? data = controller.bookList[index];
+                          return Card(
+                            elevation: 2,
+                            child: ListTile(
+                              title: Text(data?.title ?? 'a'),
+                              subtitle: Text(data?.publisher ?? ''),
+                              trailing: Image.network(data?.image ??
+                                  'https://milk717.github.io/app/kid1412.jpg'),
+                            ),
+                          );
+                        }),
+                  ),
+                );
+              }else{
+                return Text('error');
+              }
+            }
           ),
         ],
       ),

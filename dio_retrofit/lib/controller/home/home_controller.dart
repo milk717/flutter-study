@@ -8,7 +8,7 @@ class HomeController extends GetxController{
   final BookRepository bookRepository;
   HomeController({required this.bookRepository});
 
-  final RxList _bookList = [].obs;
+  final Future<RxList> bookList = [].obs as Future<RxList>;
   get bookList => _bookList.value;
   set bookList(items) => _bookList.value = items;
 
